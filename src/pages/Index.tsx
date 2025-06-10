@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Navigation from '../components/Navigation';
 import Dashboard from '../components/Dashboard';
@@ -86,7 +85,6 @@ const Index = () => {
       
       setBorrowers([...borrowers, newBorrow]);
       
-      // Decrease book stock
       setBooks(books.map(b => 
         b.id === book.id ? { ...b, stock: b.stock - 1 } : b
       ));
@@ -96,7 +94,6 @@ const Index = () => {
   const handleDeleteBorrow = (id: string) => {
     const borrowRecord = borrowers.find(b => b.id === id);
     if (borrowRecord && borrowRecord.status === 'Borrowed') {
-      // Increase book stock back
       const book = books.find(b => b.title === borrowRecord.bookTitle);
       if (book) {
         setBooks(books.map(b => 
@@ -116,7 +113,6 @@ const Index = () => {
     
     setReturns([...returns, newReturn]);
     
-    // Update borrow status and increase book stock
     setBorrowers(borrowers.map(borrow => 
       borrow.id === returnData.borrowId 
         ? { ...borrow, status: 'Returned' as const }
@@ -137,7 +133,6 @@ const Index = () => {
   const handleDeleteReturn = (id: string) => {
     const returnRecord = returns.find(r => r.id === id);
     if (returnRecord) {
-      // Update borrow status back to borrowed and decrease book stock
       setBorrowers(borrowers.map(borrow => 
         borrow.id === returnRecord.borrowId 
           ? { ...borrow, status: 'Borrowed' as const }
@@ -160,7 +155,7 @@ const Index = () => {
   const renderCurrentView = () => {
     switch (currentView) {
       case 'dashboard':
-        return <Dashboard members={members} books={books} borrowers={borrowers} returns={returns} />;
+        return <Dashboard members={members} books={books} borrowers={borrowers} returns={returns} onNavigate={setCurrentView} />;
       case 'members':
         return (
           <Members
@@ -199,7 +194,7 @@ const Index = () => {
           />
         );
       default:
-        return <Dashboard members={members} books={books} borrowers={borrowers} returns={returns} />;
+        return <Dashboard members={members} books={books} borrowers={borrowers} returns={returns} onNavigate={setCurrentView} />;
     }
   };
 

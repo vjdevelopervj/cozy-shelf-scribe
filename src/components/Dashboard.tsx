@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Book, Users, BookOpen, RotateCcw, AlertCircle, CheckCircle } from 'lucide-react';
 
@@ -7,9 +6,10 @@ interface DashboardProps {
   books: any[];
   borrowers: any[];
   returns: any[];
+  onNavigate?: (view: string) => void;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ members, books, borrowers, returns }) => {
+const Dashboard: React.FC<DashboardProps> = ({ members, books, borrowers, returns, onNavigate }) => {
   const activeBorrows = borrowers.filter(b => b.status === 'Borrowed');
   const overdueBorrows = activeBorrows.filter(b => new Date(b.dueDate) < new Date());
   const availableBooks = books.reduce((sum, book) => sum + book.stock, 0);
@@ -101,19 +101,31 @@ const Dashboard: React.FC<DashboardProps> = ({ members, books, borrowers, return
       <div className="bg-card rounded-lg border border-border p-6">
         <h3 className="text-xl font-semibold text-foreground mb-4">Quick Actions</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <button className="flex items-center justify-center p-4 border border-border rounded-lg hover:bg-accent transition-colors">
+          <button 
+            onClick={() => onNavigate?.('members')}
+            className="flex items-center justify-center p-4 border border-border rounded-lg hover:bg-accent transition-colors"
+          >
             <Users className="h-5 w-5 mr-2 text-blue-600" />
             Add Member
           </button>
-          <button className="flex items-center justify-center p-4 border border-border rounded-lg hover:bg-accent transition-colors">
+          <button 
+            onClick={() => onNavigate?.('books')}
+            className="flex items-center justify-center p-4 border border-border rounded-lg hover:bg-accent transition-colors"
+          >
             <Book className="h-5 w-5 mr-2 text-green-600" />
             Add Book
           </button>
-          <button className="flex items-center justify-center p-4 border border-border rounded-lg hover:bg-accent transition-colors">
+          <button 
+            onClick={() => onNavigate?.('borrowers')}
+            className="flex items-center justify-center p-4 border border-border rounded-lg hover:bg-accent transition-colors"
+          >
             <BookOpen className="h-5 w-5 mr-2 text-purple-600" />
             New Borrow
           </button>
-          <button className="flex items-center justify-center p-4 border border-border rounded-lg hover:bg-accent transition-colors">
+          <button 
+            onClick={() => onNavigate?.('returns')}
+            className="flex items-center justify-center p-4 border border-border rounded-lg hover:bg-accent transition-colors"
+          >
             <RotateCcw className="h-5 w-5 mr-2 text-indigo-600" />
             Process Return
           </button>
