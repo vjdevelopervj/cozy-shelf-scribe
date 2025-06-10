@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Plus } from 'lucide-react';
 import Table from './Table';
@@ -12,17 +11,24 @@ interface Member {
   registrationDate: string;
 }
 
+interface MemberFormData {
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+}
+
 interface MembersProps {
   members: Member[];
-  onAddMember: (member: Omit<Member, 'id'>) => void;
-  onEditMember: (id: string, member: Omit<Member, 'id'>) => void;
+  onAddMember: (member: MemberFormData) => void;
+  onEditMember: (id: string, member: MemberFormData) => void;
   onDeleteMember: (id: string) => void;
 }
 
 const Members: React.FC<MembersProps> = ({ members, onAddMember, onEditMember, onDeleteMember }) => {
   const [showForm, setShowForm] = useState(false);
   const [editingMember, setEditingMember] = useState<Member | null>(null);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<MemberFormData>({
     name: '',
     email: '',
     phone: '',
