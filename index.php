@@ -4,8 +4,10 @@ require_once 'config.php';
 require_once 'includes/functions.php';
 require_once 'includes/data-access.php';
 
+requireAdmin();
+
 $currentPage = getCurrentPage();
-$allowedPages = ['dashboard', 'members', 'books', 'borrowers', 'returns'];
+$allowedPages = ['dashboard', 'members', 'books', 'borrowers', 'returns', 'fines', 'payments'];
 
 if (!in_array($currentPage, $allowedPages)) {
     $currentPage = 'dashboard';
@@ -26,6 +28,12 @@ switch ($currentPage) {
         break;
     case 'returns':
         include 'pages/returns.php';
+        break;
+    case 'fines':
+        include 'pages/fines.php';
+        break;
+    case 'payments':
+        include 'pages/payments.php';
         break;
     default:
         include 'pages/dashboard.php';
