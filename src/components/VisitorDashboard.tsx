@@ -2,6 +2,9 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Book, BookOpen, Clock, CheckCircle } from 'lucide-react';
+import DashboardCharts from './DashboardCharts';
+import TopReadersRanking from './TopReadersRanking';
+import TopBooksRanking from './TopBooksRanking';
 
 interface VisitorDashboardProps {
   user: any;
@@ -55,33 +58,45 @@ const VisitorDashboard: React.FC<VisitorDashboardProps> = ({
   ];
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6">
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-foreground mb-2">
+        <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
           Selamat Datang, {user.fullname}!
         </h2>
         <p className="text-muted-foreground">Dashboard pengunjung perpustakaan</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
         {stats.map((stat, index) => {
           const Icon = stat.icon;
           return (
             <Card key={index} className="shadow-sm hover:shadow-md transition-shadow">
-              <CardContent className="p-6">
+              <CardContent className="p-4 sm:p-6">
                 <div className="flex items-center">
                   <div className={`${stat.bgColor} p-3 rounded-lg`}>
                     <Icon className={`h-6 w-6 ${stat.color}`} />
                   </div>
                   <div className="ml-4">
                     <p className="text-sm font-medium text-muted-foreground">{stat.title}</p>
-                    <p className="text-2xl font-bold text-foreground">{stat.value}</p>
+                    <p className="text-xl sm:text-2xl font-bold text-foreground">{stat.value}</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
           );
         })}
+      </div>
+
+      {/* Charts Section */}
+      <div className="mb-8">
+        <h3 className="text-xl font-semibold text-foreground mb-4">Statistik Perpustakaan</h3>
+        <DashboardCharts borrowers={borrowers} books={books} />
+      </div>
+
+      {/* Rankings Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+        <TopReadersRanking borrowers={borrowers} />
+        <TopBooksRanking borrowers={borrowers} books={books} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
