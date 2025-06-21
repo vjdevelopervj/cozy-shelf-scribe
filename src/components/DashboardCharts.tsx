@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { PolarAreaChart, PolarArea, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Cell } from 'recharts';
+import { PieChart, Pie, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer, Cell } from 'recharts';
 
 interface DashboardChartsProps {
   borrowers: any[];
@@ -71,16 +71,21 @@ const DashboardCharts: React.FC<DashboardChartsProps> = ({ borrowers, books }) =
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
-            <PolarAreaChart data={topReaders}>
-              <PolarGrid />
-              <PolarAngleAxis dataKey="name" />
-              <PolarRadiusAxis />
-              <PolarArea dataKey="value" fill="#8884d8">
-                {topReaders.map((entry, index) => (
+            <PieChart>
+              <Pie
+                data={topReaders}
+                cx="50%"
+                cy="50%"
+                outerRadius={80}
+                fill="#8884d8"
+                dataKey="value"
+                label={({ name, value }) => `${name}: ${value}`}
+              >
+                {topReaders.map((entry, index)s => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
-              </PolarArea>
-            </PolarAreaChart>
+              </Pie>
+            </PieChart>
           </ResponsiveContainer>
         </CardContent>
       </Card>
