@@ -81,7 +81,7 @@ const DashboardCharts: React.FC<DashboardChartsProps> = ({ borrowers, books }) =
                 dataKey="value"
                 label={({ name, value }) => `${name}: ${value}`}
               >
-                {topReaders.map((entry, index)s => (
+                {topReaders.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
